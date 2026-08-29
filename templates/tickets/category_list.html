@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Categories — DeskTicket{% endblock %}
+{% block page_title %}Categories{% endblock %}
+{% block content %}
+<div class="page-intro">
+    <div><span class="eyebrow">SETTINGS</span><h2>Categories</h2><p>Organize tickets by issue type and department.</p></div>
+    <a class="btn btn-dark" href="{% url 'tickets:category_create' %}"><i class="bi bi-plus-lg"></i> Add category</a>
+</div>
+<div class="panel">
+    <div class="panel-head"><div><h5>Workspace categories</h5><span>{{ categories|length }} configured categories</span></div></div>
+    <div class="table-responsive">
+        <table class="table modern-table align-middle">
+            <thead><tr><th>Category</th><th>Department</th><th>Status</th><th class="text-end">Actions</th></tr></thead>
+            <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td><div class="table-primary">{{ category.name }}</div><div class="table-secondary">Category #{{ category.pk }}</div></td>
+                    <td><span class="soft-chip"><i class="bi bi-diagram-3"></i>{{ category.department.name }}</span></td>
+                    <td>{% if category.is_active %}<span class="status status-in_progress">Active</span>{% else %}<span class="status">Inactive</span>{% endif %}</td>
+                    <td class="text-end text-nowrap">
+                        <a href="{% url 'tickets:category_edit' category.pk %}" class="btn btn-sm btn-light"><i class="bi bi-pencil"></i> Edit</a>
+                        <a href="{% url 'tickets:category_delete' category.pk %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash3"></i></a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="4" class="empty"><div class="empty-icon"><i class="bi bi-tags"></i></div><strong>No categories yet</strong><span>Create your first category to make ticket routing easier.</span><a class="btn btn-dark btn-sm mt-3" href="{% url 'tickets:category_create' %}">Add category</a></td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

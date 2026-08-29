@@ -1,0 +1,26 @@
+{% if form.non_field_errors %}
+<div class="form-error-summary">
+    <i class="bi bi-exclamation-triangle"></i>
+    <div>
+        {% for error in form.non_field_errors %}<div>{{ error }}</div>{% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% for field in form %}
+<div class="form-field {% if field.field.widget.input_type == 'checkbox' %}form-field-check{% endif %}">
+    {% if field.field.widget.input_type == 'checkbox' %}
+        <div class="form-check">
+            {{ field }}
+            <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        </div>
+    {% else %}
+        <label class="form-label" for="{{ field.id_for_label }}">
+            {{ field.label }}{% if field.field.required %}<span class="required-mark">*</span>{% endif %}
+        </label>
+        {{ field }}
+        {% if field.help_text %}<div class="form-help">{{ field.help_text }}</div>{% endif %}
+        {% for error in field.errors %}<div class="field-error"><i class="bi bi-exclamation-circle"></i>{{ error }}</div>{% endfor %}
+    {% endif %}
+</div>
+{% endfor %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Team — DeskTicket{% endblock %}
+{% block page_title %}Team members{% endblock %}
+{% block content %}
+<div class="page-intro"><div><span class="eyebrow">SETTINGS</span><h2>Team members</h2><p>Invite agents and managers to this workspace.</p></div></div>
+<div class="two-column-layout">
+    <div class="panel form-panel"><div class="panel-head"><div><h5>Add team member</h5><span>Create login credentials and assign a role.</span></div></div><form method="post" novalidate>{% csrf_token %}<div class="panel-body"><div class="form-grid">{% include "tickets/_form_fields.html" with form=form %}</div></div><div class="form-actions"><button class="btn btn-dark" type="submit"><i class="bi bi-person-plus"></i> Add member</button></div></form></div>
+    <div class="panel"><div class="panel-head"><div><h5>Workspace team</h5><span>{{ members|length }} active members</span></div></div><div class="list-stack">{% for m in members %}<div class="list-row"><div class="avatar small-avatar">{{ m.user.username|first|upper }}</div><div class="list-main"><strong>{{ m.user.get_full_name|default:m.user.username }}</strong><span>{{ m.user.email }}</span></div><span class="role-chip">{{ m.get_role_display }}</span></div>{% empty %}<div class="empty">No team members yet.</div>{% endfor %}</div></div>
+</div>
+{% endblock %}

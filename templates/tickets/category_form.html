@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} — DeskTicket{% endblock %}
+{% block page_title %}Categories{% endblock %}
+{% block content %}
+<div class="page-intro">
+    <div>
+        <span class="eyebrow">SETTINGS / CATEGORIES</span>
+        <h2>{{ title }}</h2>
+        <p>{{ subtitle }}</p>
+    </div>
+    <a class="btn btn-light" href="{% url 'tickets:categories' %}"><i class="bi bi-arrow-left"></i> Categories</a>
+</div>
+<div class="form-layout form-layout-narrow">
+    <div class="panel form-panel">
+        <div class="panel-head"><div><h5>Category details</h5><span>Keep category names short and easy for agents to scan.</span></div></div>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="panel-body">
+                <div class="form-grid">
+                    {% include "tickets/_form_fields.html" with form=form %}
+                </div>
+            </div>
+            <div class="form-actions">
+                <a class="btn btn-light" href="{% url 'tickets:categories' %}">Cancel</a>
+                <button class="btn btn-dark" type="submit">Save category</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

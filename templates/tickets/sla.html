@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}SLA — DeskTicket{% endblock %}
+{% block page_title %}SLA policies{% endblock %}
+{% block content %}
+<div class="page-intro"><div><span class="eyebrow">SETTINGS</span><h2>SLA policies</h2><p>Define response and resolution targets for each priority.</p></div></div>
+<div class="two-column-layout">
+    <div class="panel form-panel"><div class="panel-head"><div><h5>Add SLA policy</h5><span>Times are measured in minutes by the SLA engine.</span></div></div><form method="post" novalidate>{% csrf_token %}<div class="panel-body"><div class="form-grid">{% include "tickets/_form_fields.html" with form=form %}</div></div><div class="form-actions"><button class="btn btn-dark" type="submit"><i class="bi bi-plus-lg"></i> Save policy</button></div></form></div>
+    <div class="panel"><div class="panel-head"><div><h5>Active policies</h5><span>Used automatically when tickets are created.</span></div></div><div class="list-stack">{% for p in policies %}<div class="sla-item"><div><strong>{{ p.name }}</strong><span>{{ p.priority }}</span></div><div class="sla-metrics"><span><small>Response</small><b>{{ p.first_response_minutes }}m</b></span><span><small>Resolution</small><b>{{ p.resolution_minutes }}m</b></span><span><small>Warning</small><b>{{ p.warning_percent }}%</b></span></div></div>{% empty %}<div class="empty">No SLA policies yet.</div>{% endfor %}</div></div>
+</div>
+{% endblock %}

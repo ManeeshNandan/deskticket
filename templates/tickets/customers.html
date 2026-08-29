@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Customers — DeskTicket{% endblock %}
+{% block page_title %}Customers{% endblock %}
+{% block content %}
+<div class="page-intro"><div><span class="eyebrow">SETTINGS</span><h2>Customers</h2><p>Manage customer records and portal access.</p></div></div>
+<div class="two-column-layout">
+    <div class="panel form-panel"><div class="panel-head"><div><h5>Add customer</h5><span>Customers can use these credentials to access the portal.</span></div></div><form method="post" novalidate>{% csrf_token %}<div class="panel-body"><div class="form-grid">{% include "tickets/_form_fields.html" with form=form %}</div></div><div class="form-actions"><button class="btn btn-dark" type="submit"><i class="bi bi-person-plus"></i> Create customer</button></div></form></div>
+    <div class="panel"><div class="panel-head"><div><h5>Customer directory</h5><span>{{ customers|length }} customers</span></div></div><div class="list-stack">{% for c in customers %}<div class="list-row"><div class="list-avatar"><i class="bi bi-person"></i></div><div class="list-main"><strong>{{ c.name }}</strong><span>{{ c.email }}{% if c.company %} · {{ c.company }}{% endif %}</span></div><span class="soft-chip">{{ c.tickets.count }} tickets</span></div>{% empty %}<div class="empty">No customers yet.</div>{% endfor %}</div></div>
+</div>
+{% endblock %}

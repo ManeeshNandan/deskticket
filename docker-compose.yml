@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: deskticket
+      POSTGRES_USER: deskticket
+      POSTGRES_PASSWORD: change-me
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+  redis:
+    image: redis:7-alpine
+  web:
+    build: .
+    command: sh -c "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3"
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://deskticket:change-me@db:5432/deskticket
+      REDIS_URL: redis://redis:6379/0
+    volumes: ["media_data:/app/media"]
+    depends_on: [db, redis]
+    ports: ["8000:8000"]
+  worker:
+    build: .
+    command: celery -A config worker -l info
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://deskticket:change-me@db:5432/deskticket
+      REDIS_URL: redis://redis:6379/0
+    volumes: ["media_data:/app/media"]
+    depends_on: [db, redis]
+  beat:
+    build: .
+    command: celery -A config beat -l info
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://deskticket:change-me@db:5432/deskticket
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [db, redis]
+volumes:
+  postgres_data:
+  media_data:

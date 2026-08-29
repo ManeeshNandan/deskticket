@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Reports — DeskTicket{% endblock %}
+{% block page_title %}Reports{% endblock %}
+{% block content %}
+<div class="page-intro"><div><span class="eyebrow">ANALYTICS</span><h2>Reports</h2><p>A clear view of volume, status, priority and SLA health.</p></div><a class="btn btn-dark" href="{% url 'tickets:report_csv' %}"><i class="bi bi-download"></i> Export CSV</a></div>
+<div class="metric-grid"><div class="metric"><span>Total</span><b>{{ total }}</b><small>All tickets</small></div><div class="metric metric-green"><span>Resolved</span><b>{{ resolved }}</b><small>Resolved requests</small></div><div class="metric"><span>Closed</span><b>{{ closed }}</b><small>Closed requests</small></div><div class="metric metric-dark"><span>Overdue</span><b>{{ overdue }}</b><small>Resolution SLA overdue</small></div></div>
+<div class="row g-4"><div class="col-lg-4"><div class="panel"><div class="panel-head"><h5>Status</h5></div>{% for x in by_status %}<div class="health-row"><span>{{ x.status }}</span><b>{{ x.count }}</b></div>{% empty %}<div class="empty">No data.</div>{% endfor %}</div></div><div class="col-lg-4"><div class="panel"><div class="panel-head"><h5>Priority</h5></div>{% for x in by_priority %}<div class="health-row"><span>{{ x.priority }}</span><b>{{ x.count }}</b></div>{% empty %}<div class="empty">No data.</div>{% endfor %}</div></div><div class="col-lg-4"><div class="panel"><div class="panel-head"><h5>Departments</h5></div>{% for x in by_department %}<div class="health-row"><span>{{ x.department__name|default:'Unassigned' }}</span><b>{{ x.count }}</b></div>{% empty %}<div class="empty">No data.</div>{% endfor %}</div></div></div>
+{% endblock %}

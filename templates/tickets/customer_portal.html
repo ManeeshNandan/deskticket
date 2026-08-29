@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}My Requests — DeskTicket{% endblock %}
+{% block page_title %}My Requests{% endblock %}
+{% block content %}
+<div class="page-intro"><div><span class="eyebrow">CUSTOMER PORTAL</span><h2>My requests</h2><p>Track your support requests and conversations.</p></div><a class="btn btn-dark" href="{% url 'tickets:customer_create' %}"><i class="bi bi-plus-lg"></i> New request</a></div>
+<div class="panel"><div class="table-responsive"><table class="table modern-table align-middle mb-0"><thead><tr><th>Ticket</th><th>Subject</th><th>Status</th><th>Priority</th><th>Updated</th></tr></thead><tbody>{% for t in tickets %}<tr><td><a class="ticket-link" href="{% url 'tickets:customer_detail' t.pk %}">{{ t.number }}</a></td><td>{{ t.subject }}</td><td><span class="status status-{{ t.status|lower }}">{{ t.get_status_display }}</span></td><td><span class="priority priority-{{ t.priority|lower }}">{{ t.get_priority_display }}</span></td><td class="table-secondary">{{ t.updated_at|date:"d M Y H:i" }}</td></tr>{% empty %}<tr><td colspan="5" class="empty"><div class="empty-icon"><i class="bi bi-life-preserver"></i></div><strong>No requests yet</strong><span>Create your first support request.</span></td></tr>{% endfor %}</tbody></table></div></div>
+{% endblock %}

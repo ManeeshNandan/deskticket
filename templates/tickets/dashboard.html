@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Overview — DeskTicket{% endblock %}
+{% block page_title %}Overview{% endblock %}
+{% block content %}
+<div class="page-intro"><div><span class="eyebrow">WORKSPACE OVERVIEW</span><h2>Good to see you.</h2><p>Here’s what’s happening in your support workspace.</p></div><a class="btn btn-dark" href="{% url 'tickets:create' %}"><i class="bi bi-plus-lg"></i> New ticket</a></div>
+<div class="metric-grid">
+    <div class="metric"><span>Total tickets</span><b>{{ total }}</b><small>All requests</small></div>
+    <div class="metric metric-green"><span>My pending</span><b>{{ mine_count }}</b><small>Assigned to you</small></div>
+    <div class="metric"><span>Unassigned</span><b>{{ unassigned_count }}</b><small>Need attention</small></div>
+    <div class="metric metric-dark"><span>Overdue</span><b>{{ overdue_count }}</b><small>SLA at risk</small></div>
+</div>
+<div class="row g-4 mt-1">
+    <div class="col-xl-8"><div class="panel"><div class="panel-head"><div><h5>Recent tickets</h5><span>Latest requests across the workspace</span></div><a href="{% url 'tickets:list' %}">View all</a></div><div class="table-responsive"><table class="table modern-table mb-0"><thead><tr><th>Ticket</th><th>Requester</th><th>Status</th><th>Priority</th><th>Owner</th></tr></thead><tbody>{% for t in recent_tickets %}<tr><td><a class="ticket-link" href="{% url 'tickets:detail' t.pk %}">{{ t.number }}<small>{{ t.subject|truncatechars:40 }}</small></a></td><td>{{ t.requester_email }}</td><td><span class="status status-{{ t.status|lower }}">{{ t.get_status_display }}</span></td><td><span class="priority priority-{{ t.priority|lower }}">{{ t.get_priority_display }}</span></td><td>{{ t.assigned_to|default:"Unassigned" }}</td></tr>{% empty %}<tr><td colspan="5" class="empty">No tickets yet.</td></tr>{% endfor %}</tbody></table></div></div></div>
+    <div class="col-xl-4"><div class="panel"><div class="panel-head"><div><h5>Ticket health</h5><span>Current status mix</span></div></div><div class="health-row"><span>Open</span><b>{{ open_count }}</b></div><div class="health-row"><span>In progress</span><b>{{ progress_count }}</b></div><div class="health-row"><span>On hold</span><b>{{ hold_count }}</b></div><div class="health-row"><span>Resolved</span><b>{{ resolved_count }}</b></div><div class="health-row"><span>Urgent active</span><b>{{ urgent_count }}</b></div></div>{% if agent_load %}<div class="panel mt-4"><div class="panel-head"><div><h5>Agent workload</h5><span>Active tickets by owner</span></div></div>{% for a in agent_load %}<div class="health-row"><span>{{ a.assigned_to__username|default:"Unassigned" }}</span><b>{{ a.count }}</b></div>{% endfor %}</div>{% endif %}</div>
+</div>
+{% endblock %}

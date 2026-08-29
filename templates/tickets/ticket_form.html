@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} — DeskTicket{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="page-intro">
+    <div>
+        <span class="eyebrow">TICKETS</span>
+        <h2>{{ title }}</h2>
+        <p>{{ subtitle|default:"Create a clear, actionable support request." }}</p>
+    </div>
+    <a class="btn btn-light" href="{% url 'tickets:list' %}"><i class="bi bi-arrow-left"></i> Back</a>
+</div>
+
+<div class="form-layout">
+    <div class="panel form-panel">
+        <div class="panel-head">
+            <div><h5>Ticket information</h5><span>Required fields are marked with an asterisk.</span></div>
+        </div>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="panel-body">
+                <div class="form-grid form-grid-2">
+                    {% include "tickets/_form_fields.html" with form=form %}
+                </div>
+            </div>
+            <div class="form-actions">
+                <a class="btn btn-light" href="{% url 'tickets:list' %}">Cancel</a>
+                <button class="btn btn-dark" type="submit"><i class="bi bi-check2"></i> Save ticket</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} — DeskTicket{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="page-intro"><div><span class="eyebrow">EMAIL INTEGRATION</span><h2>{{ title }}</h2><p>Connect Gmail, Outlook, Yahoo or any standard IMAP mailbox.</p></div><a class="btn btn-light" href="{% url 'tickets:mailboxes' %}"><i class="bi bi-arrow-left"></i> Mailboxes</a></div>
+<div class="form-layout">
+    <div class="panel form-panel">
+        <div class="panel-head"><div><h5>Mailbox connection</h5><span>Credentials are encrypted before being stored.</span></div></div>
+        <div class="callout"><i class="bi bi-shield-check"></i><div><strong>Keep your mailbox secure</strong><span>Use an app password where available. OAuth2 can be used for supported providers.</span></div></div>
+        <form method="post" novalidate>{% csrf_token %}<div class="panel-body"><div class="form-grid form-grid-2">{% include "tickets/_form_fields.html" with form=form %}</div></div><div class="form-actions"><a class="btn btn-light" href="{% url 'tickets:mailboxes' %}">Cancel</a><button class="btn btn-dark" type="submit"><i class="bi bi-check2"></i> Save mailbox</button></div></form>
+    </div>
+</div>
+{% endblock %}

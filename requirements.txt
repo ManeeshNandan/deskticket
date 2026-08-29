@@ -1,0 +1,15 @@
+Django==4.2.25
+django-filter==24.3
+djangorestframework==3.15.2
+djangorestframework-simplejwt==5.5.1
+psycopg[binary]>=3.2,<4.0
+dj-database-url>=2.3,<3.0
+celery>=5.4,<6.0
+redis>=5.0,<7.0
+python-dotenv>=1.1,<2.0
+cryptography>=44.0,<47.0
+beautifulsoup4>=4.13,<5.0
+nh3>=0.2.21,<1.0
+whitenoise>=6.9,<7.0
+gunicorn>=23,<24
+uvicorn[standard]>=0.34,<1.0

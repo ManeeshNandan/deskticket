@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Tickets — DeskTicket{% endblock %}
+{% block page_title %}Tickets{% endblock %}
+{% block content %}
+<div class="page-intro"><div><span class="eyebrow">SUPPORT QUEUE</span><h2>Tickets</h2><p>Search, filter and manage every support request.</p></div><a class="btn btn-dark" href="{% url 'tickets:create' %}"><i class="bi bi-plus-lg"></i> New ticket</a></div>
+<form class="filter-panel" method="get">
+    <div class="search-field"><i class="bi bi-search"></i><input name="q" value="{{ q }}" placeholder="Search ticket, subject, requester or category..."></div>
+    <select name="status" class="form-select filter-control"><option value="">All statuses</option>{% for value,label in statuses %}<option value="{{ value }}" {% if status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+    <select name="priority" class="form-select filter-control"><option value="">All priorities</option>{% for value,label in priorities %}<option value="{{ value }}" {% if priority == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+    <select name="assigned" class="form-select filter-control"><option value="">All owners</option><option value="me" {% if assigned == 'me' %}selected{% endif %}>My tickets</option><option value="unassigned" {% if assigned == 'unassigned' %}selected{% endif %}>Unassigned</option></select>
+    <button class="btn btn-dark" type="submit">Filter</button>
+    {% if q or status or priority or assigned %}<a href="{% url 'tickets:list' %}" class="btn btn-light">Clear</a>{% endif %}
+</form>
+<div class="panel">
+    <div class="table-responsive">
+        <table class="table modern-table align-middle mb-0">
+            <thead><tr><th>Ticket</th><th>Requester</th><th>Category</th><th>Status</th><th>Priority</th><th>Assigned</th><th>Created</th></tr></thead>
+            <tbody>
+            {% for t in tickets %}
+                <tr>
+                    <td><a class="ticket-link" href="{% url 'tickets:detail' t.pk %}">{{ t.number }}<small>{{ t.subject|truncatechars:46 }}</small></a></td>
+                    <td><div class="table-primary">{{ t.requester_name|default:t.requester_email }}</div><div class="table-secondary">{{ t.requester_email }}</div></td>
+                    <td>{% if t.category %}<span class="soft-chip">{{ t.category.name }}</span>{% else %}<span class="table-secondary">—</span>{% endif %}</td>
+                    <td><span class="status status-{{ t.status|lower }}">{{ t.get_status_display }}</span></td>
+                    <td><span class="priority priority-{{ t.priority|lower }}">{{ t.get_priority_display }}</span></td>
+                    <td>{{ t.assigned_to|default:"Unassigned" }}</td>
+                    <td><span class="table-secondary">{{ t.created_at|date:"d M Y H:i" }}</span></td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="7" class="empty"><div class="empty-icon"><i class="bi bi-ticket-perforated"></i></div><strong>No tickets found</strong><span>Try changing your filters or create a new ticket.</span></td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if tickets.paginator.count %}
+    <div class="pagination-wrap">
+        <span>Showing {{ tickets.start_index }}–{{ tickets.end_index }} of {{ tickets.paginator.count }}</span>
+        <nav aria-label="Ticket pagination"><ul class="pagination mb-0">
+            {% if tickets.has_previous %}<li class="page-item"><a class="page-link" href="?q={{ q|urlencode }}&status={{ status|urlencode }}&priority={{ priority|urlencode }}&assigned={{ assigned|urlencode }}&page={{ tickets.previous_page_number }}">‹</a></li>{% else %}<li class="page-item disabled"><span class="page-link">‹</span></li>{% endif %}
+            {% for num in tickets.paginator.page_range %}
+                {% if num == tickets.number %}<li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% elif num == 1 or num == tickets.paginator.num_pages or num >= tickets.number|add:'-2' and num <= tickets.number|add:'2' %}<li class="page-item"><a class="page-link" href="?q={{ q|urlencode }}&status={{ status|urlencode }}&priority={{ priority|urlencode }}&assigned={{ assigned|urlencode }}&page={{ num }}">{{ num }}</a></li>{% endif %}
+            {% endfor %}
+            {% if tickets.has_next %}<li class="page-item"><a class="page-link" href="?q={{ q|urlencode }}&status={{ status|urlencode }}&priority={{ priority|urlencode }}&assigned={{ assigned|urlencode }}&page={{ tickets.next_page_number }}">›</a></li>{% else %}<li class="page-item disabled"><span class="page-link">›</span></li>{% endif %}
+        </ul></nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

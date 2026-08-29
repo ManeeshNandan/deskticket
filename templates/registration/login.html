@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+
+{% block title %}Sign in — DeskTicket{% endblock %}
+
+{% block public_content %}
+
+<div class="auth-page">
+
+    <div class="auth-container">
+
+        <!-- LEFT BRAND PANEL -->
+        <div class="auth-showcase">
+
+            <a
+                href="{% url 'tickets:landing' %}"
+                class="auth-logo"
+            >
+                <span class="auth-logo-mark">D</span>
+
+                <span class="auth-logo-text">
+                    Desk<span>Ticket</span>
+                </span>
+            </a>
+
+            <div class="auth-showcase-content">
+
+                <span class="auth-badge">
+                    SUPPORT WORKSPACE
+                </span>
+
+                <h1>
+                    Manage support.
+                    <span>Simply.</span>
+                </h1>
+
+                <p>
+                    Bring your customer conversations, tickets,
+                    agents and support workflows together in one
+                    powerful workspace.
+                </p>
+
+                <div class="auth-features">
+
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon">
+                            <i class="bi bi-ticket-perforated"></i>
+                        </div>
+
+                        <div>
+                            <strong>Centralized tickets</strong>
+
+                            <span>
+                                Keep every support request organized.
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+
+                        <div>
+                            <strong>Work as a team</strong>
+
+                            <span>
+                                Assign tickets and collaborate with agents.
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+
+                        <div>
+                            <strong>Stay on top of SLAs</strong>
+
+                            <span>
+                                Track response and resolution times.
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="auth-showcase-footer">
+
+                <span>
+                    © {% now "Y" %} DeskTicket
+                </span>
+
+                <span>
+                    Open-source support platform
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT LOGIN PANEL -->
+        <div class="auth-form-panel">
+
+            <div class="auth-form-wrapper">
+
+                <!-- Mobile logo -->
+                <div class="auth-mobile-brand">
+
+                    <a
+                        href="{% url 'tickets:landing' %}"
+                        class="auth-logo"
+                    >
+                        <span class="auth-logo-mark">D</span>
+
+                        <span class="auth-logo-text">
+                            Desk<span>Ticket</span>
+                        </span>
+                    </a>
+
+                </div>
+
+
+                <!-- HEADING -->
+                <div class="auth-heading">
+
+                    <span class="auth-heading-label">
+                        WELCOME BACK
+                    </span>
+
+                    <h2>
+                        Sign in to your workspace
+                    </h2>
+
+                    <p>
+                        Enter your credentials to continue to
+                        your support dashboard.
+                    </p>
+
+                </div>
+
+
+                <!-- NON FIELD ERRORS -->
+                {% if form.non_field_errors %}
+
+                    <div class="auth-alert">
+
+                        <i class="bi bi-exclamation-circle"></i>
+
+                        <div>
+                            {% for error in form.non_field_errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- LOGIN FORM -->
+                <form
+                    method="post"
+                    class="auth-form"
+                    novalidate
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- USERNAME -->
+                    <div class="auth-field">
+
+                        <label
+                            for="{{ form.username.id_for_label }}"
+                        >
+                            Username
+                        </label>
+
+                        <div class="auth-input-wrapper">
+
+                            <i class="bi bi-person"></i>
+
+                            {{ form.username }}
+
+                        </div>
+
+                        {% for error in form.username.errors %}
+
+                            <div class="auth-field-error">
+                                <i class="bi bi-exclamation-circle"></i>
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                    <div class="auth-field">
+
+                        <div class="auth-label-row">
+
+                            <label
+                                for="{{ form.password.id_for_label }}"
+                            >
+                                Password
+                            </label>
+
+                        </div>
+
+
+                        <div class="auth-input-wrapper">
+
+                            <i class="bi bi-lock"></i>
+
+                            {{ form.password }}
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword()"
+                                aria-label="Show password"
+                            >
+                                <i
+                                    id="passwordToggleIcon"
+                                    class="bi bi-eye"
+                                ></i>
+                            </button>
+
+                        </div>
+
+                        {% for error in form.password.errors %}
+
+                            <div class="auth-field-error">
+                                <i class="bi bi-exclamation-circle"></i>
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    {% if next %}
+
+                        <input
+                            type="hidden"
+                            name="next"
+                            value="{{ next }}"
+                        >
+
+                    {% endif %}
+
+
+                    <!-- SUBMIT -->
+                    <button
+                        type="submit"
+                        class="auth-submit"
+                    >
+
+                        <span>
+                            Sign in
+                        </span>
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </button>
+
+                </form>
+
+
+                <!-- SIGN UP -->
+                <div class="auth-divider">
+                    <span>New to DeskTicket?</span>
+                </div>
+
+
+                <a
+                    href="{% url 'tickets:signup' %}"
+                    class="auth-create-workspace"
+                >
+                    <span>
+                        Create a workspace
+                    </span>
+
+                    <i class="bi bi-arrow-up-right"></i>
+                </a>
+
+
+                <div class="auth-security">
+
+                    <i class="bi bi-shield-check"></i>
+
+                    <span>
+                        Your workspace is protected with secure authentication.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function togglePassword() {
+
+    const password = document.getElementById(
+        "{{ form.password.id_for_label }}"
+    );
+
+    const icon = document.getElementById(
+        "passwordToggleIcon"
+    );
+
+    if (!password) {
+        return;
+    }
+
+    if (password.type === "password") {
+
+        password.type = "text";
+
+        icon.classList.remove("bi-eye");
+        icon.classList.add("bi-eye-slash");
+
+    } else {
+
+        password.type = "password";
+
+        icon.classList.remove("bi-eye-slash");
+        icon.classList.add("bi-eye");
+
+    }
+
+}
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: deskticket
+    runtime: python
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: python -m gunicorn config.asgi:application -k uvicorn.workers.UvicornWorker
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DEMO_MODE
+        value: "True"
+      - key: DEMO_USERNAME
+        value: demo
+      - key: DEMO_PASSWORD
+        value: Demo@12345
+      - key: MAILBOX_ENCRYPTION_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: APP_URL
+        sync: false

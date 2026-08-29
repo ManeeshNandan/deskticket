@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Departments — DeskTicket{% endblock %}
+{% block page_title %}Departments{% endblock %}
+{% block content %}
+<div class="page-intro"><div><span class="eyebrow">SETTINGS</span><h2>Departments</h2><p>Create queues and organize ticket ownership.</p></div></div>
+<div class="two-column-layout">
+    <div class="panel form-panel"><div class="panel-head"><div><h5>Add department</h5><span>Use a short code such as IT or HR.</span></div></div><form method="post" novalidate>{% csrf_token %}<div class="panel-body"><div class="form-grid">{% include "tickets/_form_fields.html" with form=form %}</div></div><div class="form-actions"><button class="btn btn-dark" type="submit"><i class="bi bi-plus-lg"></i> Add department</button></div></form></div>
+    <div class="panel"><div class="panel-head"><div><h5>Workspace departments</h5><span>{{ departments|length }} departments</span></div></div><div class="list-stack">{% for d in departments %}<div class="list-row"><div class="list-avatar"><i class="bi bi-diagram-3"></i></div><div class="list-main"><strong>{{ d.name }}</strong><span>{{ d.code }}</span></div>{% if d.is_active %}<span class="status status-in_progress">Active</span>{% else %}<span class="status">Disabled</span>{% endif %}</div>{% empty %}<div class="empty">No departments yet.</div>{% endfor %}</div></div>
+</div>
+{% endblock %}

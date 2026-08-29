@@ -1,0 +1,599 @@
+{% extends "base.html" %}
+
+{% block title %}
+    DeskTicket — Open-source support desk
+{% endblock %}
+
+{% block public_content %}
+
+<div class="landing">
+
+    <!-- =========================================================
+         NAVIGATION
+    ========================================================== -->
+
+    <nav class="landing-nav">
+
+        <a
+            class="brand brand-dark"
+            href="{% url 'tickets:landing' %}"
+        >
+            <span class="brand-mark">D</span>
+
+            <span>
+                Desk<span class="accent">Ticket</span>
+            </span>
+        </a>
+
+
+        <div class="landing-nav-links">
+
+            <a
+                href="#features"
+                class="nav-text"
+            >
+                Features
+            </a>
+
+            <a
+                href="#workflow"
+                class="nav-text"
+            >
+                Workflow
+            </a>
+
+            <a
+                href="https://github.com/ManeeshNandan/care-health-hospital"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="nav-text github-nav-link"
+            >
+                <i class="bi bi-github"></i>
+                GitHub
+            </a>
+
+            <a
+                href="{% url 'login' %}"
+                class="nav-text"
+            >
+                Sign in
+            </a>
+
+            <a
+                class="btn btn-dark btn-sm"
+                href="{% url 'tickets:signup' %}"
+            >
+                Create workspace
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================================================
+         HERO
+    ========================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-copy">
+
+            <span class="pill">
+                <i class="bi bi-stars"></i>
+                OPEN-SOURCE · SELF-HOSTED
+            </span>
+
+
+            <h1 class="hero-title">
+    Support tickets,
+    <span class="highlight">without the lock-in.</span>
+</h1>
+
+
+            <p>
+                DeskTicket is a modern Django help desk for teams
+                that want complete control over tickets, email,
+                customers, SLAs and data.
+            </p>
+
+
+            <div class="hero-actions">
+
+                <a
+                    class="btn btn-dark btn-lg"
+                    href="{% url 'tickets:signup' %}"
+                >
+                    Create your workspace
+
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+
+                <a
+                    class="btn btn-light btn-lg"
+                    href="#features"
+                >
+                    Explore features
+                </a>
+
+            </div>
+
+
+            <div class="hero-secondary-links">
+
+                <a
+                    href="https://github.com/ManeeshNandan/care-health-hospital"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <i class="bi bi-github"></i>
+
+                    View source on GitHub
+
+                    <i class="bi bi-arrow-up-right"></i>
+                </a>
+
+            </div>
+
+
+            <div class="trust">
+
+                <span>
+                    <i class="bi bi-check2"></i>
+                    Multi-tenant
+                </span>
+
+                <span>
+                    <i class="bi bi-check2"></i>
+                    Gmail / Outlook / Yahoo
+                </span>
+
+                <span>
+                    <i class="bi bi-check2"></i>
+                    REST API
+                </span>
+
+                <span>
+                    <i class="bi bi-check2"></i>
+                    No billing layer
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             PRODUCT PREVIEW
+        ====================================================== -->
+
+        <div class="hero-card">
+
+            <div class="mock-top">
+
+                <span>
+                    DeskTicket / Overview
+                </span>
+
+                <span class="live-dot">
+                    <span></span>
+                    LIVE
+                </span>
+
+            </div>
+
+
+            <div class="mock-stats">
+
+                <div>
+                    <small>My pending</small>
+                    <b>12</b>
+                </div>
+
+                <div>
+                    <small>Unassigned</small>
+                    <b>4</b>
+                </div>
+
+                <div>
+                    <small>Overdue</small>
+                    <b>2</b>
+                </div>
+
+            </div>
+
+
+            <div class="mock-ticket">
+
+                <span class="priority-dot"></span>
+
+                <div>
+                    <p>
+                        TKT-1042 · VPN access
+                    </p>
+
+                    <small>
+                        IT Support · assigned to Arun
+                    </small>
+                </div>
+
+                <span class="status-chip">
+                    In progress
+                </span>
+
+            </div>
+
+
+            <div class="mock-ticket">
+
+                <span class="priority-dot yellow"></span>
+
+                <div>
+                    <p>
+                        TKT-1041 · Backup alert
+                    </p>
+
+                    <small>
+                        Infrastructure · new email
+                    </small>
+                </div>
+
+                <span class="status-chip yellow-bg">
+                    Open
+                </span>
+
+            </div>
+
+
+            <div class="mock-ticket">
+
+                <span class="priority-dot"></span>
+
+                <div>
+                    <p>
+                        TKT-1038 · Password reset
+                    </p>
+
+                    <small>
+                        Customer portal
+                    </small>
+                </div>
+
+                <span class="status-chip">
+                    Resolved
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         FEATURES
+    ========================================================== -->
+
+    <section
+        id="features"
+        class="feature-section"
+    >
+
+        <div class="section-head">
+
+            <span class="eyebrow">
+                BUILT FOR CONTROL
+            </span>
+
+            <h2>
+                Everything your support team needs.
+            </h2>
+
+            <p>
+                A complete support platform without forcing your
+                organization into a proprietary ecosystem.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+            <article>
+
+                <i class="bi bi-inboxes"></i>
+
+                <h4>
+                    Unified ticketing
+                </h4>
+
+                <p>
+                    Email, portal, manual creation and API requests
+                    become one organized workflow.
+                </p>
+
+            </article>
+
+
+            <article>
+
+                <i class="bi bi-envelope-paper"></i>
+
+                <h4>
+                    Email automation
+                </h4>
+
+                <p>
+                    Connect IMAP inboxes and keep customer replies
+                    inside the correct ticket thread.
+                </p>
+
+            </article>
+
+
+            <article>
+
+                <i class="bi bi-stopwatch"></i>
+
+                <h4>
+                    SLA management
+                </h4>
+
+                <p>
+                    Track first response, resolution targets,
+                    warnings and breaches.
+                </p>
+
+            </article>
+
+
+            <article>
+
+                <i class="bi bi-buildings"></i>
+
+                <h4>
+                    Multi-tenancy
+                </h4>
+
+                <p>
+                    Keep every organization isolated while running
+                    a single self-hosted platform.
+                </p>
+
+            </article>
+
+
+            <article>
+
+                <i class="bi bi-bell"></i>
+
+                <h4>
+                    Notifications
+                </h4>
+
+                <p>
+                    Assignments, customer replies and SLA events
+                    reach agents in-app and by email.
+                </p>
+
+            </article>
+
+
+            <article>
+
+                <i class="bi bi-bar-chart"></i>
+
+                <h4>
+                    Reports
+                </h4>
+
+                <p>
+                    Understand ticket volume, priorities,
+                    departments and SLA health.
+                </p>
+
+            </article>
+
+
+            <article>
+
+                <i class="bi bi-code-slash"></i>
+
+                <h4>
+                    REST API
+                </h4>
+
+                <p>
+                    Integrate DeskTicket with your applications
+                    using JWT-authenticated APIs.
+                </p>
+
+            </article>
+
+
+            <article>
+
+                <i class="bi bi-shield-lock"></i>
+
+                <h4>
+                    Self-hosted
+                </h4>
+
+                <p>
+                    Your database, files, mail credentials and
+                    operational data stay under your control.
+                </p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         WORKFLOW
+    ========================================================== -->
+
+    <section
+        id="workflow"
+        class="workflow"
+    >
+
+        <div class="section-head">
+
+            <span class="eyebrow">
+                THE WORKFLOW
+            </span>
+
+            <h2>
+                From email to resolution.
+            </h2>
+
+            <p>
+                A simple flow for customers, agents and support
+                administrators.
+            </p>
+
+        </div>
+
+
+        <div class="steps">
+
+            <div>
+
+                <b>01</b>
+
+                <strong>
+                    Receive
+                </strong>
+
+                <p>
+                    A customer emails your support mailbox or
+                    submits a portal request.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <b>02</b>
+
+                <strong>
+                    Route
+                </strong>
+
+                <p>
+                    DeskTicket creates a ticket, applies SLA rules
+                    and routes it to a team or agent.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <b>03</b>
+
+                <strong>
+                    Work
+                </strong>
+
+                <p>
+                    Agents reply, add internal notes, change status
+                    and collaborate around the request.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <b>04</b>
+
+                <strong>
+                    Resolve
+                </strong>
+
+                <p>
+                    Track SLA performance, resolve the request
+                    and keep the full conversation history.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         GITHUB / OPEN SOURCE CTA
+    ========================================================== -->
+
+    <section class="github-cta">
+
+        <div>
+
+            <span class="eyebrow">
+                OPEN SOURCE
+            </span>
+
+            <h2>
+                Built in the open.
+            </h2>
+
+            <p>
+                Explore the source code, follow development,
+                report issues and contribute to DeskTicket.
+            </p>
+
+        </div>
+
+
+        <a
+            href="https://github.com/ManeeshNandan/care-health-hospital"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="github-button"
+        >
+
+            <i class="bi bi-github"></i>
+
+            <span>
+                View on GitHub
+            </span>
+
+            <i class="bi bi-arrow-up-right"></i>
+
+        </a>
+
+    </section>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer class="landing-footer">
+    <span>© {% now "Y" %} DeskTicket</span>
+
+    <div class="footer-links">
+        <span>Open-source · Self-hosted · Django</span>
+
+        <a
+            href="https://github.com/ManeeshNandan/care-health-hospital"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <i class="bi bi-github"></i>
+            GitHub
+        </a>
+    </div>
+</footer>
+
+</div>
+
+{% endblock %}

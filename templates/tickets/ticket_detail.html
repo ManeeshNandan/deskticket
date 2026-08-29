@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ ticket.number }} — DeskTicket{% endblock %}
+{% block page_title %}{{ ticket.number }}{% endblock %}
+{% block content %}
+<div class="ticket-header mb-4">
+    <div><span class="eyebrow">{{ ticket.get_source_display }} · {{ ticket.created_at|date:"d M Y, H:i" }}</span><h2>{{ ticket.subject }}</h2><div class="ticket-meta">{{ ticket.requester_name|default:ticket.requester_email }} · {{ ticket.requester_email }}</div></div>
+    <a class="btn btn-light" href="{% url 'tickets:list' %}"><i class="bi bi-arrow-left"></i> Back</a>
+</div>
+<div class="row g-4">
+    <div class="col-xl-8">
+        <div class="panel mb-4"><div class="panel-head"><div><h5>Conversation</h5><span>Customer and agent messages</span></div></div>
+        {% for m in ticket.messages.all %}<div class="message-card {% if m.direction == 'OUT' %}outgoing{% endif %}"><div class="message-head"><div class="avatar small-avatar">{{ m.sender|first|upper }}</div><div><b>{{ m.sender }}</b><small>{{ m.received_at|date:"d M Y H:i" }} · {{ m.get_direction_display }}</small></div></div>{% if m.body_html %}<div class="email-html">{{ m.body_html|safe }}</div>{% else %}<div class="message-body">{{ m.body|linebreaksbr }}</div>{% endif %}{% for a in m.attachments.all %}<a class="attachment" href="{{ a.file.url }}" target="_blank"><i class="bi bi-paperclip"></i>{{ a.original_name }}</a>{% endfor %}</div>{% empty %}<div class="empty">No email messages yet.</div>{% endfor %}
+        {% for c in ticket.comments.all %}<div class="message-card internal"><div class="message-head"><div class="avatar small-avatar">{{ c.author.username|first|upper|default:'S' }}</div><div><b>{{ c.author|default:'System' }}</b><small>{{ c.created_at|date:"d M Y H:i" }} · Internal note</small></div></div><div class="message-body">{{ c.comment|linebreaksbr }}</div></div>{% endfor %}
+        </div>
+        <div class="panel mb-4"><div class="panel-head"><div><h5>Reply to customer</h5><span>Send a response directly to {{ ticket.requester_email }}</span></div></div><form method="post" action="{% url 'tickets:reply' ticket.pk %}">{% csrf_token %}<div class="panel-body">{% include "tickets/_form_fields.html" with form=reply_form %}</div><div class="form-actions"><button class="btn btn-dark" type="submit"><i class="bi bi-send"></i> Send reply</button></div></form></div>
+        <div class="panel"><div class="panel-head"><div><h5>Internal note</h5><span>Only support staff can see internal notes.</span></div></div><form method="post" action="{% url 'tickets:comment' ticket.pk %}">{% csrf_token %}<div class="panel-body">{% include "tickets/_form_fields.html" with form=comment_form %}</div><div class="form-actions"><button class="btn btn-light" type="submit"><i class="bi bi-sticky"></i> Add note</button></div></form></div>
+    </div>
+    <div class="col-xl-4">
+        <div class="panel mb-4"><div class="panel-head"><div><h5>Workflow</h5><span>Keep ownership and SLA current.</span></div></div><form method="post" action="{% url 'tickets:update' ticket.pk %}">{% csrf_token %}<div class="panel-body"><div class="form-grid">{% include "tickets/_form_fields.html" with form=update_form %}</div></div><div class="form-actions"><button class="btn btn-dark w-100" type="submit">Save changes</button></div></form></div>
+        <div class="panel mb-4"><div class="panel-head"><h5>Ticket details</h5></div><div class="detail-list"><div><span>Customer</span><b>{{ ticket.customer|default:ticket.requester_email }}</b></div><div><span>Department</span><b>{{ ticket.department|default:'-' }}</b></div><div><span>Category</span><b>{{ ticket.category|default:'-' }}</b></div><div><span>Created</span><b>{{ ticket.created_at|date:"d M Y H:i" }}</b></div><div><span>Response due</span><b>{{ ticket.sla_first_response_due|date:"d M Y H:i"|default:'-' }}</b></div><div><span>Resolution due</span><b>{{ ticket.sla_resolution_due|date:"d M Y H:i"|default:'-' }}</b></div></div></div>
+        <div class="panel"><div class="panel-head"><h5>Attachments</h5></div><div class="panel-body">{% for a in ticket.attachments.all %}<a class="attachment" href="{{ a.file.url }}" target="_blank"><i class="bi bi-paperclip"></i>{{ a.original_name }}</a>{% empty %}<div class="table-secondary">No attachments.</div>{% endfor %}<form class="mt-3" method="post" enctype="multipart/form-data" action="{% url 'tickets:attachment' ticket.pk %}">{% csrf_token %}{% include "tickets/_form_fields.html" with form=attachment_form %}<button class="btn btn-outline-dark mt-2" type="submit">Upload</button></form></div></div>
+    </div>
+</div>
+{% endblock %}

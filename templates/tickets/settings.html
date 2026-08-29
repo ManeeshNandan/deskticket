@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Settings — DeskTicket{% endblock %}
+{% block page_title %}Settings{% endblock %}
+{% block content %}
+<div class="page-intro"><div><span class="eyebrow">WORKSPACE</span><h2>Settings</h2><p>Configure how your DeskTicket workspace operates.</p></div></div>
+<div class="settings-grid">
+    <a class="settings-card" href="{% url 'tickets:departments' %}"><span class="settings-icon"><i class="bi bi-diagram-3"></i></span><h5>Departments</h5><p>Organize queues, ownership and team routing.</p><span class="settings-arrow"><i class="bi bi-arrow-up-right"></i></span></a>
+    <a class="settings-card" href="{% url 'tickets:categories' %}"><span class="settings-icon"><i class="bi bi-tags"></i></span><h5>Categories</h5><p>Classify requests by issue type and department.</p><span class="settings-arrow"><i class="bi bi-arrow-up-right"></i></span></a>
+    <a class="settings-card" href="{% url 'tickets:sla' %}"><span class="settings-icon"><i class="bi bi-stopwatch"></i></span><h5>SLA policies</h5><p>Set first-response and resolution targets.</p><span class="settings-arrow"><i class="bi bi-arrow-up-right"></i></span></a>
+    <a class="settings-card" href="{% url 'tickets:members' %}"><span class="settings-icon"><i class="bi bi-people"></i></span><h5>Users &amp; roles</h5><p>Manage organization members and permissions.</p><span class="settings-arrow"><i class="bi bi-arrow-up-right"></i></span></a>
+    <a class="settings-card" href="{% url 'tickets:customers' %}"><span class="settings-icon"><i class="bi bi-person-lines-fill"></i></span><h5>Customers</h5><p>Manage customer records and portal access.</p><span class="settings-arrow"><i class="bi bi-arrow-up-right"></i></span></a>
+    <a class="settings-card" href="{% url 'tickets:mailboxes' %}"><span class="settings-icon"><i class="bi bi-envelope-paper"></i></span><h5>Email mailboxes</h5><p>Connect Gmail, Outlook, Yahoo or custom IMAP.</p><span class="settings-arrow"><i class="bi bi-arrow-up-right"></i></span></a>
+</div>
+{% endblock %}

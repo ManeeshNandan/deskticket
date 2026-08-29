@@ -1,0 +1,382 @@
+{% extends "base.html" %}
+
+{% block title %}Create workspace — DeskTicket{% endblock %}
+
+{% block public_content %}
+
+<div class="auth-page">
+
+    <div class="auth-container signup-container">
+
+        <!-- =====================================================
+             LEFT SHOWCASE
+             ===================================================== -->
+
+        <div class="auth-showcase">
+
+            <a
+                href="{% url 'tickets:landing' %}"
+                class="auth-logo"
+            >
+                <span class="auth-logo-mark">D</span>
+
+                <span class="auth-logo-text">
+                    Desk<span>Ticket</span>
+                </span>
+            </a>
+
+
+            <div class="auth-showcase-content">
+
+                <span class="auth-badge">
+                    SELF-HOSTED HELP DESK
+                </span>
+
+
+                <h1>
+                    Your support desk.
+                    <span>Your control.</span>
+                </h1>
+
+
+                <p>
+                    Create your own DeskTicket workspace and manage
+                    customers, agents, tickets and support workflows
+                    from one place.
+                </p>
+
+
+                <div class="auth-features">
+
+                    <div class="auth-feature">
+
+                        <div class="auth-feature-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+
+                        <div>
+                            <strong>Your data stays yours</strong>
+
+                            <span>
+                                Self-host DeskTicket and keep complete
+                                control of your data.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="auth-feature">
+
+                        <div class="auth-feature-icon">
+                            <i class="bi bi-envelope-check"></i>
+                        </div>
+
+                        <div>
+                            <strong>Email-to-ticket</strong>
+
+                            <span>
+                                Automatically turn incoming emails
+                                into support tickets.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="auth-feature">
+
+                        <div class="auth-feature-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+
+                        <div>
+                            <strong>Built for support teams</strong>
+
+                            <span>
+                                Manage agents, customers, assignments
+                                and ticket workflows.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="auth-feature">
+
+                        <div class="auth-feature-icon">
+                            <i class="bi bi-stopwatch"></i>
+                        </div>
+
+                        <div>
+                            <strong>SLA management</strong>
+
+                            <span>
+                                Track response and resolution targets
+                                automatically.
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="auth-showcase-footer">
+
+                <span>
+                    © {% now "Y" %} DeskTicket
+                </span>
+
+                <span>
+                    Open-source support platform
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             RIGHT FORM
+             ===================================================== -->
+
+        <div class="auth-form-panel">
+
+            <div class="auth-form-wrapper signup-form-wrapper">
+
+
+                <!-- Mobile logo -->
+
+                <div class="auth-mobile-brand">
+
+                    <a
+                        href="{% url 'tickets:landing' %}"
+                        class="auth-logo"
+                    >
+
+                        <span class="auth-logo-mark">
+                            D
+                        </span>
+
+                        <span class="auth-logo-text">
+                            Desk<span>Ticket</span>
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+                <!-- Heading -->
+
+                <div class="auth-heading">
+
+                    <span class="auth-heading-label">
+                        GET STARTED
+                    </span>
+
+                    <h2>
+                        Create your workspace
+                    </h2>
+
+                    <p>
+                        Set up your support desk in minutes.
+                        Your data stays under your control.
+                    </p>
+
+                </div>
+
+
+                <!-- Non-field errors -->
+
+                {% if form.non_field_errors %}
+
+                    <div class="auth-alert">
+
+                        <i class="bi bi-exclamation-circle"></i>
+
+                        <div>
+
+                            {% for error in form.non_field_errors %}
+
+                                <div>
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- =================================================
+                     FORM
+                     ================================================= -->
+
+                <form
+                    method="post"
+                    class="auth-form signup-form"
+                    novalidate
+                >
+
+                    {% csrf_token %}
+
+
+                    <div class="signup-fields">
+
+
+                        {% for field in form %}
+
+                            <div class="auth-field">
+
+                                <label
+                                    for="{{ field.id_for_label }}"
+                                >
+
+                                    {{ field.label }}
+
+                                    {% if field.field.required %}
+                                        <span class="required-mark">
+                                            *
+                                        </span>
+                                    {% endif %}
+
+                                </label>
+
+
+                                <div class="auth-input-wrapper">
+
+                                    {% if field.name == "username" %}
+
+                                        <i class="bi bi-person"></i>
+
+                                    {% elif field.name == "email" %}
+
+                                        <i class="bi bi-envelope"></i>
+
+                                    {% elif field.name == "password" or field.name == "password1" %}
+
+                                        <i class="bi bi-lock"></i>
+
+                                    {% elif field.name == "password2" %}
+
+                                        <i class="bi bi-lock-fill"></i>
+
+                                    {% elif field.name == "workspace_name" or field.name == "organization_name" %}
+
+                                        <i class="bi bi-building"></i>
+
+                                    {% elif field.name == "name" %}
+
+                                        <i class="bi bi-building"></i>
+
+                                    {% else %}
+
+                                        <i class="bi bi-pencil"></i>
+
+                                    {% endif %}
+
+
+                                    {{ field }}
+
+                                </div>
+
+
+                                {% if field.help_text %}
+
+                                    <div class="auth-help-text">
+                                        {{ field.help_text|safe }}
+                                    </div>
+
+                                {% endif %}
+
+
+                                {% for error in field.errors %}
+
+                                    <div class="auth-field-error">
+
+                                        <i class="bi bi-exclamation-circle"></i>
+
+                                        <span>
+                                            {{ error }}
+                                        </span>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- Submit -->
+
+                    <button
+                        type="submit"
+                        class="auth-submit"
+                    >
+
+                        <span>
+                            Create workspace
+                        </span>
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </button>
+
+                </form>
+
+
+                <!-- Login -->
+
+                <div class="auth-divider">
+                    <span>Already have a workspace?</span>
+                </div>
+
+
+                <a
+                    href="{% url 'login' %}"
+                    class="auth-create-workspace"
+                >
+
+                    <span>
+                        Sign in to DeskTicket
+                    </span>
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+
+                <!-- Security -->
+
+                <div class="auth-security">
+
+                    <i class="bi bi-shield-check"></i>
+
+                    <span>
+                        Your workspace and account are protected
+                        with secure authentication.
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

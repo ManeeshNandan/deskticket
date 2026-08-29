@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Notifications — DeskTicket{% endblock %}
+{% block page_title %}Notifications{% endblock %}
+{% block content %}
+<div class="page-intro"><div><span class="eyebrow">ACTIVITY</span><h2>Notifications</h2><p>Assignments, replies and SLA events that need your attention.</p></div></div>
+<div class="panel"><div class="panel-head"><div><h5>Your notifications</h5><span>Unread notifications stay highlighted.</span></div></div>{% for n in notifications %}<div class="notification-row {% if not n.is_read %}unread{% endif %}"><div class="notif-icon"><i class="bi bi-bell"></i></div><div class="flex-grow-1"><a href="{% if n.ticket %}{% url 'tickets:detail' n.ticket.pk %}{% else %}#{% endif %}"><b>{{ n.title }}</b></a><p>{{ n.message }}</p><small>{{ n.created_at|date:"d M Y H:i" }}</small></div>{% if not n.is_read %}<a class="btn btn-sm btn-light" href="{% url 'tickets:notification_read' n.pk %}">Mark read</a>{% endif %}</div>{% empty %}<div class="empty"><div class="empty-icon"><i class="bi bi-check2-circle"></i></div><strong>You're all caught up</strong><span>No new notifications.</span></div>{% endfor %}</div>
+{% endblock %}
