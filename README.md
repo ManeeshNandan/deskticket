@@ -10,9 +10,6 @@
 DeskTicket is a self-hosted, multi-tenant help desk application built with Django. It combines ticket management, customer support workflows, SLA tracking, email/IMAP ingestion, notifications, reporting, a customer portal, and a REST API in one application.
 
 
-
-> **Public demo notice:** The live environment uses synthetic test data. Real mailbox connections and outbound email are disabled. Never enter production credentials, customer information, patient information, or other sensitive data into the public demo.
-
 ## Highlights
 
 - Multi-tenant workspaces
